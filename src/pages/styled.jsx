@@ -13,6 +13,7 @@ const Container = styled.div`
     max-width:100%;
     padding-bottom:39px;
     box-sizing: border-box;
+    
     header{
         display: flex;
         justify-content:space-between;
@@ -37,44 +38,14 @@ const Container = styled.div`
         display:flex;
         flex-direction:column;
         max-width: 500px;       
-    }
-
-
-    .addInput{
-        background-color:white;
-        height: 45px;
-        border-radius: 8px;
-        display: flex;
-        align-itens: center;
-    }
-    .txtInput{
-        font-size:18px;
-        border: none;
-        outline: none;
-    }
-   
-    .addButton{
-        width:15px;
-        height: 15px;
-        margin:auto 15px;
-        background-color:transparent;
-        border:1px solid grey;
-        border-radius:100%;
-        cursor:pointer;
     } 
-    
-    .addButton:active{
-        background-color:#834cdd;
-
-    }
-    
 
     .menu{
         margin:5% 0 0 0;
         display:flex;
         flex-direction:column;
         background-color: white;
-        height: 350px;
+        height: 293px;
         border-radius: 8px 8px 0px 0px;
         -webkit-box-shadow: 3px 20px 50px -2px rgba(0,0,0,0.41); 
         box-shadow: 3px 20px 50px -2px rgba(0,0,0,0.41);
@@ -85,7 +56,8 @@ const Container = styled.div`
         background-color:transparent;
         height:305px;
         border-radius: 8px 8px 0px 0px;
-        margin:0;
+        padding: 0;
+        margin: 0;
     }
     
     .allButtons{
@@ -107,7 +79,7 @@ const Container = styled.div`
         color:grey;
     }
     .allButtons button:hover{
-        color: hsl(236, 33%, 92%);
+        color: black;
     }
     .allButtons button:focus{
         color: hsl(220, 98%, 61%);
@@ -120,6 +92,7 @@ const Container = styled.div`
 
     .footerTxt{
         padding-top:3%;
+        padding-bottom:2.1%;
         color:grey;
         font-size:12px;
         text-align:center;
@@ -133,10 +106,6 @@ const Container = styled.div`
 
     header{
         padding: 0 25px 0 25px;
-    }
-
-    .addInput{
-        margin: 4% 25px;
     }
     
     .allButtons{
@@ -209,47 +178,14 @@ const BlackContainer = styled.div`
         display:flex;
         flex-direction:column;
         max-width: 500px;       
-    }
-
-
-    .addInput{
-        background-color: hsl(235, 24%, 19%);
-        height: 45px;
-        border-radius: 8px;
-        display: flex;
-        align-itens: center;
-    }
-    .txtInput{
-        background-color: hsl(235, 24%, 19%);
-        font-size:18px;
-        border: none;
-        outline: none;
-        color:white;
-    }
-    
-   
-    .addButton{
-        width:15px;
-        height: 15px;
-        margin:auto 15px;
-        background-color:transparent;
-        border:1px solid grey;
-        border-radius:100%;
-        cursor:pointer;
-    } 
-    
-    .addButton:active{
-        background-color:#834cdd;
-
-    }
-    
+    }   
 
     .menu{
         margin:5% 0 0 0;
         display:flex;
         flex-direction:column;
         background-color: hsl(235, 24%, 19%);
-        height: 350px;
+        height: 293px;
         border-radius: 8px 8px 0px 0px;
         -webkit-box-shadow: 3px 20px 50px -2px rgba(0,0,0,0.41); 
         box-shadow: 3px 20px 50px -2px rgba(0,0,0,0.41);
@@ -260,7 +196,9 @@ const BlackContainer = styled.div`
         background-color:transparent;
         height:305px;
         border-radius: 8px 8px 0px 0px;
-        margin:0;
+        padding: 0;
+        margin: 0;
+        max-width: 100%;
     }
     
     .allButtons{
@@ -292,9 +230,10 @@ const BlackContainer = styled.div`
         border: none;
         background-color:transparent;
     }
-
+    
     .footerTxt{
         padding-top:3%;
+        padding-bottom:2.1%;
         color:grey;
         font-size:12px;
         text-align:center;
@@ -309,11 +248,6 @@ const BlackContainer = styled.div`
     header{
         padding: 0 25px 0 25px;
     }
-
-    .addInput{
-        margin: 4% 25px;
-    }
-    
     
     .allButtons{
         margin: 0 25px;

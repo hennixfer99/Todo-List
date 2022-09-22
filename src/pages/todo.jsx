@@ -2,15 +2,28 @@ import  {Container, BlackContainer} from "./styled";
 import {useState, useEffect} from 'react';
 import sun from "../imgs/icon-sun.svg"
 import moon from "../imgs/icon-moon.svg"
-import deletebtn from "../imgs/icon-cross.svg"
+import AddInput from "../components/newTodo/newTodo";
+import TodoItem from "../components/todoList/todoList";
 
 function Homepage(){
 
     const [width, setWidth] = useState(window.innerWidth);
     const [darkMode, setDarkMode] = useState('light');
-    const [filter, setFilter] = useState([]);
+    const [todosNames, setTodosNames] = useState([])
+    const breakpoint = 375;   
 
-    const breakpoint = 375;
+    const addTodo = (todos) => {
+      setTodosNames([...todosNames, todos])
+    }
+    
+    const changeColor = () => {
+        darkMode === 'light' ? setDarkMode('dark') : setDarkMode('light')     
+    }
+
+    const deleteTodo = (id) => {
+        let deleting = todosNames.filter((todo) => todo.id !== id)
+        setTodosNames(deleting)
+    }
 
     useEffect(() => {
         const windowSize = () => setWidth(window.innerWidth)
@@ -19,42 +32,21 @@ function Homepage(){
             window.removeEventListener("resize", windowSize)
         };
     }, [darkMode])
-
-    const changeColor = () => {
-        darkMode === 'light' ? setDarkMode('dark') : setDarkMode('light')
-    }
-    // const ul = document.querySelector('todoList')
-    // const buttonadd = document.querySelector('.addButton')
     
-    // buttonadd.addEventListener("click",       
-    //     ul.appendChild('li')
-    // )
-
-    const li = (text) => {
-        return (
-            <li><input type="checkbox"/> <label>{text}</label> <button><img src={deletebtn} alt="remove" /></button></li>
-        )
-    }
-
-
-
 
     if(darkMode === 'light'){
-        return(<Container>
+        return(
+        <Container>
             <header>         
             <h1>T O D O</h1> <button onClick={changeColor}><img alt ="themeImg" src= {moon}/></button>
             </header>            
-            <main>
-            <div className="addInput">            
-            
-            <button className= "addButton" type="submit" /><input className="txtInput" type="text" placeholder = "Create a new todo..." />
-            
-            </div> 
+            <main>    
+            <AddInput dark = {darkMode} buttonAdd = {addTodo}/>
             <div className="menu">
             <ul className="todoList">
-        
-            {li}
-            
+            {todosNames.map((todo) => (
+                <TodoItem key = {todo.id} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} />
+            ))}
             </ul> 
 
             </div>
@@ -96,12 +88,12 @@ function Homepage(){
             <h1>T O D O</h1> <button onClick={changeColor}><img alt ="themeImg" src= {sun}/></button>
             </header>            
             <main>
-            <div className="addInput">
-            <button className= "addButton" type="checkbox" /><input className="txtInput" type="text" placeholder = "Create a new todo..." />
-            </div>
+            <AddInput dark = {darkMode} buttonAdd = {addTodo}/>
             <div className="menu">
             <ul>
-            {li}
+            {todosNames.map((todo) => (
+                <TodoItem key = {todo.id} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} />
+            ))}
             </ul> 
 
             </div>
