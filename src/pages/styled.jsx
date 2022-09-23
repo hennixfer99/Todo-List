@@ -11,7 +11,7 @@ const Container = styled.div`
     background-size: 100%;
     background-repeat: no-repeat;
     max-width:100%;
-    padding-bottom:39px;
+    padding-bottom:100%;
     box-sizing: border-box;
     
     header{
@@ -151,7 +151,7 @@ const BlackContainer = styled.div`
     background-size: 100%;
     background-repeat: no-repeat;
     max-width:100%;
-    padding-bottom:39px;
+    padding-bottom:100%;
     box-sizing: border-box;
 
     header{
