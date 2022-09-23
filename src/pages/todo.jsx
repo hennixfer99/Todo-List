@@ -10,10 +10,33 @@ function Homepage(){
     const [width, setWidth] = useState(window.innerWidth);
     const [darkMode, setDarkMode] = useState('light');
     const [todosNames, setTodosNames] = useState([])
-    const breakpoint = 375;   
+    const [filteredTodos, setFilteredTodos] = useState([])
+    const [checked, setChecked] = useState(false)
+    const breakpoint = 375;
+
+    function changeValueCheck(value, id){
+        
+        if(value === false){
+            const marking = todosNames.filter((todo) => todo.id === id)
+            const newObj = {text:marking[0].text, id: marking[0].id, isMarked:true}
+            return setChecked(true) && setTodosNames([...todosNames, newObj])
+        }else{
+            const marking = todosNames.filter((todo) => todo.id === id)  
+            const newObj = {text:marking[0].text, id: marking[0].id, isMarked:false}
+            return setChecked(false) && setTodosNames([...todosNames, newObj])
+        }
+    }
+
+    const filtering = (btn) => {
+        console.log(btn)
+        // const filteringTodos = todosNames.filter((todo) => todo.isMarked === value)     
+        // return setFilteredTodos(filteringTodos)        
+    }
+   
 
     const addTodo = (todos) => {
-      setTodosNames([...todosNames, todos])
+      const newTodosObj = {text: todos.text, id:todos.id, isMarked:checked}
+      setTodosNames([...todosNames, newTodosObj])
     }
     
     const changeColor = () => {
@@ -24,6 +47,7 @@ function Homepage(){
         let deleting = todosNames.filter((todo) => todo.id !== id)
         setTodosNames(deleting)
     }
+    
 
     useEffect(() => {
         const windowSize = () => setWidth(window.innerWidth)
@@ -45,7 +69,7 @@ function Homepage(){
             <div className="menu">
             <ul className="todoList">
             {todosNames.map((todo) => (
-                <TodoItem key = {todo.id} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} />
+                <TodoItem key = {todo.id} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} CheckValue = {checked} checked = {changeValueCheck} />
             ))}
             </ul> 
 
@@ -56,24 +80,24 @@ function Homepage(){
                 <p>5 items left</p>
                 
                 <div className="filterButtons">
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={() => console.log("teste")}>All</button>
+                <button onClick={() => console.log("teste")}>Active</button>
+                <button onClick={() => console.log("teste")}>Completed</button>
                 </div>
-                <button>Clear Completed</button>
+                <button onClick={() => console.log("teste")}>Clear Completed</button>
             </div>
             
             ):(
                 <>
                 <div className="allButtons">
                 <p>5 items left</p>
-                <button>Clear Completed</button>
+                <button onClick={() => console.log("teste")}>Clear Completed</button>
                 </div>
                 
                 <div className="filterButtons">
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={() => console.log("teste")}>All</button>
+                <button onClick={() => console.log("teste")}>Active</button>
+                <button onClick={() => console.log("teste")}>Completed</button>
                 </div>
                 </>
             )}   
@@ -90,11 +114,21 @@ function Homepage(){
             <main>
             <AddInput dark = {darkMode} buttonAdd = {addTodo}/>
             <div className="menu">
-            <ul>
-            {todosNames.map((todo) => (
-                <TodoItem key = {todo.id} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} />
-            ))}
-            </ul> 
+            
+                {filteredTodos.length > 0 ? (
+                    <ul>
+                    {filteredTodos.map((todo) => (
+                       <TodoItem key = {todo.id} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} CheckValue = {checked} checked = {changeValueCheck} />
+                       ))};
+                    </ul>
+                ):(
+                    <ul>
+                    {todosNames.map((todo) => (
+                       <TodoItem key = {todo.id} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} CheckValue = {checked} checked = {changeValueCheck} />
+                    ))};
+                    </ul>
+                )}
+             
 
             </div>
 
@@ -104,24 +138,24 @@ function Homepage(){
                 <p>5 items left</p>
                 
                 <div className="filterButtons">
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={() => console.log("teste")}>All</button>
+                <button onClick={() => console.log("teste")}>Active</button>
+                <button onClick={() => console.log("teste")}>Completed</button>
                 </div>
-                <button>Clear Completed</button>
+                <button onClick={() => console.log("teste")}>Clear Completed</button>
             </div>
             
             ):(
                 <>
                 <div className="allButtons">
                 <p>5 items left</p>
-                <button>Clear Completed</button>
+                <button onClick={() => console.log("teste")}>Clear Completed</button>
                 </div>
                 
                 <div className="filterButtons">
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={() => console.log("teste")}>All</button>
+                <button onClick={() => console.log("teste")}>Active</button>
+                <button onClick={() => console.log("teste")}>Completed</button>
                 </div>
                 </>
             )}   

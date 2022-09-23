@@ -17,18 +17,23 @@ const Container = styled.form`
         }
 
     .addButton{
-        width:15px;
-        height: 15px;
+        width:18px;
+        height: 18px;
         margin:auto 15px;
         background-color:transparent;
         border:1px solid grey;
         border-radius:100%;
         cursor:pointer;
     } 
-    
+    .addButton:hover{
+        border: 1px solid rgb(87,221,255); 
+    }
     .addButton:active{
-        background-color:#834cdd;
-
+        width: 16px;
+        height: 16px;
+        border-radius: 100%;
+        background: rgb(87,221,255);
+        background: linear-gradient(153deg, rgba(87,221,255,1) 30%, rgba(192,88,243,0.8491771708683473) 74%);
     }
     
 
@@ -58,10 +63,9 @@ const BlackContainer = styled.form`
     color:white;
     }
 
-
     .addButton{
-        width:15px;
-        height: 15px;
+        width:18px;
+        height: 18px;
         margin:auto 15px;
         background-color:transparent;
         border:1px solid grey;
@@ -69,10 +73,17 @@ const BlackContainer = styled.form`
         cursor:pointer;
     } 
     
-    .addButton:active{
-        background-color:#834cdd;
+    .addButton:hover{
+        border: 1px solid rgb(87,221,255); 
     }
-
+    .addButton:active{
+        width: 16px;
+        height: 16px;
+        border-radius: 100%;
+        background: rgb(87,221,255);
+        background: linear-gradient(153deg, rgba(87,221,255,1) 30%, rgba(192,88,243,0.8491771708683473) 74%);
+    }
+    
 
     @media screen and (max-width:375px){    
 
