@@ -25,26 +25,21 @@ function Homepage(){
             
             setTodosNames([...deleting, newObj])
 
-            console.log(todosNames)
+            
 
             return setChecked(true) 
         }else{
             const marking = todosNames.filter((todo) => todo.id === id)  
             const newObj = {text:marking[0].text, id: marking[0].id, isMarked:false}
             const deleting = todosNames.filter((todo) => todo.id !== id)
-
-            
+          
             setTodosNames([...deleting, newObj])
-
-            console.log(todosNames)
-
             return setChecked(false) 
         }
     }
 
 
-    const filtering = (value) => {
-        console.log(value)
+    const filtering = (value) => {    
         const filteringTodos = todosNames.filter((todo) => todo.isMarked === value)     
         if(!filteredTodos){
         return setFilteredTodos(null)
