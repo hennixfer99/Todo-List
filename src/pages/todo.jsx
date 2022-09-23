@@ -11,6 +11,7 @@ function Homepage(){
     const [darkMode, setDarkMode] = useState('light');
     const [todosNames, setTodosNames] = useState([])
     const [filteredTodos, setFilteredTodos] = useState([])
+    const [clear, setClear] = ([])
     const [checked, setChecked] = useState(false)
     const breakpoint = 375;
 
@@ -18,21 +19,65 @@ function Homepage(){
         
         if(value === false){
             const marking = todosNames.filter((todo) => todo.id === id)
-            const newObj = {text:marking[0].text, id: marking[0].id, isMarked:true}
-            return setChecked(true) && setTodosNames([...todosNames, newObj])
+            const newObj = {text:marking[0].text, id: marking[0].id, isMarked:true} 
+            const deleting = todosNames.filter((todo) => todo.id !== id)
+
+            
+            setTodosNames([...deleting, newObj])
+
+            console.log(todosNames)
+
+            return setChecked(true) 
         }else{
             const marking = todosNames.filter((todo) => todo.id === id)  
             const newObj = {text:marking[0].text, id: marking[0].id, isMarked:false}
-            return setChecked(false) && setTodosNames([...todosNames, newObj])
+            const deleting = todosNames.filter((todo) => todo.id !== id)
+
+            
+            setTodosNames([...deleting, newObj])
+
+            console.log(todosNames)
+
+            return setChecked(false) 
         }
     }
 
-    const filtering = (btn) => {
-        console.log(btn)
-        // const filteringTodos = todosNames.filter((todo) => todo.isMarked === value)     
-        // return setFilteredTodos(filteringTodos)        
+
+    const filtering = (value) => {
+        console.log(value)
+        const filteringTodos = todosNames.filter((todo) => todo.isMarked === value)     
+        if(!filteredTodos){
+        return setFilteredTodos(null)
+        }
+        return setFilteredTodos(filteringTodos)        
     }
-   
+
+    const deleteAll = (value) => {
+        const allClear = todosNames.filter((todo) => todo.isMarked !== value)
+        setTodosNames(allClear)
+    }
+
+    const allTodos = (value) => {
+        if(value === true){
+            if(filteredTodos.length < 0 ){
+            for(let i = 0; i < todosNames.length; i++){
+                const clearAllComplete = todosNames[i].isMarked === value
+                setClear(...clearAllComplete)
+            }
+            return setTodosNames(clear)
+        }else{
+
+            setFilteredTodos([])
+
+            for(let i = 0; i < todosNames.length; i++){
+                const clearAllComplete = todosNames[i].isMarked === value
+                setClear(...clearAllComplete)
+            }
+            return setTodosNames(clear)
+        }
+        }
+        
+    }
 
     const addTodo = (todos) => {
       const newTodosObj = {text: todos.text, id:todos.id, isMarked:checked}
@@ -44,7 +89,7 @@ function Homepage(){
     }
 
     const deleteTodo = (id) => {
-        let deleting = todosNames.filter((todo) => todo.id !== id)
+        const deleting = todosNames.filter((todo) => todo.id !== id)
         setTodosNames(deleting)
     }
     
@@ -67,37 +112,54 @@ function Homepage(){
             <main>    
             <AddInput dark = {darkMode} buttonAdd = {addTodo}/>
             <div className="menu">
-            <ul className="todoList">
-            {todosNames.map((todo) => (
-                <TodoItem key = {todo.id} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} CheckValue = {checked} checked = {changeValueCheck} />
-            ))}
-            </ul> 
+            {filteredTodos.length > 0 ? (
+                    <ul className="todoList">
+                    {filteredTodos.map((todo, index) => (
+                       <TodoItem key = {index} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} CheckValue = {checked} checked = {changeValueCheck} />
+                       ))}
+                    </ul>
+                ):(
+                    <ul className="todoList">
+                    {todosNames.map((todo, index) => (
+                       <TodoItem key = {index} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} CheckValue = {checked} checked = {changeValueCheck} />
+                       ))}
+                    </ul>
+                )}
 
             </div>
             {width > breakpoint ? (
 
-            <div className="allButtons">                
-                <p>5 items left</p>
+            <div className="allButtons">
+                {filteredTodos.length > 0 ? (
+                <p>{filteredTodos.length} items left</p>
+                ):(
+                <p>{todosNames.length} items left</p>
+                )}            
                 
+
                 <div className="filterButtons">
-                <button onClick={() => console.log("teste")}>All</button>
-                <button onClick={() => console.log("teste")}>Active</button>
-                <button onClick={() => console.log("teste")}>Completed</button>
+                <button onClick={() => allTodos(true)}>All</button>
+                <button onClick={() => filtering(true)}>Active</button>
+                <button onClick={() => filtering(false)}>Completed</button>
                 </div>
-                <button onClick={() => console.log("teste")}>Clear Completed</button>
+                <button onClick={() => deleteAll(false)}>Clear Completed</button>
             </div>
             
             ):(
                 <>
                 <div className="allButtons">
-                <p>5 items left</p>
-                <button onClick={() => console.log("teste")}>Clear Completed</button>
+                {filteredTodos.length > 0 ? (
+                <p>{filteredTodos.length} items left</p>
+                ):(
+                <p>{todosNames.length} items left</p>
+                )}      
+                <button onClick={() => deleteAll(false)}>Clear Completed</button>
                 </div>
                 
                 <div className="filterButtons">
-                <button onClick={() => console.log("teste")}>All</button>
-                <button onClick={() => console.log("teste")}>Active</button>
-                <button onClick={() => console.log("teste")}>Completed</button>
+                <button onClick={() => allTodos(true)}>All</button>
+                <button onClick={() => filtering(true)}>Active</button>
+                <button onClick={() => filtering(false)}>Completed</button>
                 </div>
                 </>
             )}   
@@ -117,15 +179,15 @@ function Homepage(){
             
                 {filteredTodos.length > 0 ? (
                     <ul>
-                    {filteredTodos.map((todo) => (
-                       <TodoItem key = {todo.id} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} CheckValue = {checked} checked = {changeValueCheck} />
-                       ))};
+                    {filteredTodos.map((todo, index) => (
+                       <TodoItem key = {index} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} CheckValue = {checked} checked = {changeValueCheck} />
+                       ))}
                     </ul>
                 ):(
                     <ul>
-                    {todosNames.map((todo) => (
-                       <TodoItem key = {todo.id} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} CheckValue = {checked} checked = {changeValueCheck} />
-                    ))};
+                    {todosNames.map((todo, index) => (
+                       <TodoItem key = {index} id = {todo.id} dark={darkMode} text={todo.text} buttonRemove = {deleteTodo} CheckValue = {checked} checked = {changeValueCheck} />
+                       ))}
                     </ul>
                 )}
              
@@ -134,31 +196,39 @@ function Homepage(){
 
             {width > breakpoint ? (
 
-            <div className="allButtons">                
-                <p>5 items left</p>
-                
+                <div className="allButtons">
+                {filteredTodos.length > 0 ? (
+                <p>{filteredTodos.length} items left</p>
+                ):(
+                <p>{todosNames.length} items left</p>
+                )}            
+
                 <div className="filterButtons">
-                <button onClick={() => console.log("teste")}>All</button>
-                <button onClick={() => console.log("teste")}>Active</button>
-                <button onClick={() => console.log("teste")}>Completed</button>
+                <button onClick={() => allTodos(true)}>All</button>
+                <button onClick={() => filtering(true)}>Active</button>
+                <button onClick={() => filtering(false)}>Completed</button>
                 </div>
-                <button onClick={() => console.log("teste")}>Clear Completed</button>
+                <button onClick={() => deleteAll(false)}>Clear Completed</button>
             </div>
             
             ):(
                 <>
                 <div className="allButtons">
-                <p>5 items left</p>
-                <button onClick={() => console.log("teste")}>Clear Completed</button>
+                {filteredTodos.length > 0 ? (
+                <p>{filteredTodos.length} items left</p>
+                ):(
+                <p>{todosNames.length} items left</p>
+                )}      
+                <button onClick={() => deleteAll(false)}>Clear Completed</button>
                 </div>
                 
                 <div className="filterButtons">
-                <button onClick={() => console.log("teste")}>All</button>
-                <button onClick={() => console.log("teste")}>Active</button>
-                <button onClick={() => console.log("teste")}>Completed</button>
+                <button onClick={() => allTodos(true)}>All</button>
+                <button onClick={() => filtering(true)}>Active</button>
+                <button onClick={() => filtering(false)}>Completed</button>
                 </div>
                 </>
-            )}   
+                )}   
             </main>
             <footer><p className="footerTxt">Drag and drop to reorder list</p></footer>
         </BlackContainer>            
